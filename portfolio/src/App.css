@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+/* in your global styles or Tailwind config */
+body {
+  padding-top: 72px; /* or height of your header */
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+@keyframes borderPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 10px 5px rgba(0, 255, 255, 1);
+  }
+}
+
+.vibrate {
+  animation: shake 0.4s ease-in-out, borderPulse 0.8s ease-in-out;
+}
+
+/* stronger shadow */
+.custom-shadow {
+  box-shadow: 0 8px 20px rgba(23, 91, 131, 0.5); /* cyan-ish glow */
+  /* or use: 0 4px 15px rgba(255, 255, 255, 0.2); for white glow */
+}
+

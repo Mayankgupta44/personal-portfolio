@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+html {
+  /* 1rem = 10px for easier scaling */
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-black font-sans m-0 p-0;
+  font-size: 1.6rem; /* default 16px */
+  line-height: 1.5;
+  background-color: #153341;
+}
+/* 102934 */
+/* Customize scrollbars (optional) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Example utility class extension (optional) */
+.container {
+  @apply max-w-7xl mx-auto px-4;
+}
+
+/* Spotlight effect */
+#spotlight {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  background: radial-gradient(
+    circle at var(--x, 50%) var(--y, 50%),
+    rgba(24, 50, 63, 0.75) 15%,     /* Darker shade with opacity */
+    rgba(0, 0, 0, 0.9) 45%          /* Deeper dark background */
+  );
+  mix-blend-mode: lighten;
+  transition: background 0.1s ease;
+}
+
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  15% { transform: rotate(14deg); }
+  30% { transform: rotate(-8deg); }
+  40% { transform: rotate(14deg); }
+  50% { transform: rotate(-4deg); }
+  60% { transform: rotate(10deg); }
+  70% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.animate-wave {
+  animation: wave 2s infinite ease-in-out;
+}
+
+@keyframes blink {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+.blink {
+  animation: blink 1s step-end infinite;
+}
