@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useToast } from "../hooks/use-toast";
 import { useTheme } from "../contexts/ThemeContext";
+import emailjs from "emailjs-com";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,18 @@ export default function ContactPage() {
   const { toast } = useToast();
   const { isDarkMode } = useTheme();
 
+  // Load env variables from Vite
+  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+  useEffect(() => {
+    // Initialize EmailJS with the public key once
+    if (publicKey) {
+      emailjs.init(publicKey);
+    }
+  }, [publicKey]);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -23,17 +36,58 @@ export default function ContactPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    toast({
-      title: "Message sent!",
-      description: "Thanks! I'll be in touch soon 😄",
-    });
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-      privacy: false,
-    });
+
+    // Validate required fields
+    if (
+      !formData.name.trim() ||
+      !formData.email.trim() ||
+      !formData.message.trim() ||
+      !formData.privacy
+    ) {
+      toast({
+        title: "Error!",
+        description: "Please fill in all fields and agree to the privacy policy.",
+      });
+      return;
+    }
+
+    if (!serviceId || !templateId || !publicKey) {
+      toast({
+        title: "Configuration Error",
+        description: "Email service not properly configured.",
+      });
+      return;
+    }
+
+    emailjs
+      .send(serviceId, templateId, {
+        user_name: formData.name,
+        user_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+      })
+      .then(
+        (response) => {
+          toast({
+            title: "Message sent!",
+            description: "Thanks! I'll be in touch soon.",
+          });
+          setFormData({
+            name: "",
+            email: "",
+            subject: "",
+            message: "",
+            privacy: false,
+          });
+        },
+        (error) => {
+          toast({
+            title: "Error!",
+            description: "Oops! Something went wrong. Please try again later.",
+          });
+          console.error("EmailJS error:", error);
+        }
+      );
   };
 
   return (
@@ -61,28 +115,41 @@ export default function ContactPage() {
                      shadow-lg hover:shadow-2xl transform hover:scale-105 animate-scale-in"
         >
           <pre className="text-md md:text-lg leading-relaxed font-mono overflow-x-auto">
-{`// `}
-<span className="text-pink-400">// 🌈 Spreading Stardust:</span>
-{`\n`}
-<span className="text-pink-400">// Crafting Cosmic Email 🌌</span>
-{`\n\n`}
-<span className="text-green-400">import</span> <span className="text-white">{`{ useState }`}</span> <span className="text-green-400">from</span> <span className="text-yellow-300">"react"</span>;
-{`\n\n`}
-<span className="text-blue-400">const</span> <span className="text-white">[sender, setSender]</span> = <span className="text-yellow-300">"🚀"</span>;
-{`\n`}
-<span className="text-blue-400">const</span> <span className="text-white">[recipient, setRecipient]</span> = <span className="text-yellow-300">"📧"</span>;
-{`\n`}
-<span className="text-blue-400">const</span> <span className="text-white">[subject, setSubject]</span> = <span className="text-yellow-300">"<span className='blink'>|</span>✨"</span>;
-{`\n`}
-<span className="text-blue-400">const</span> <span className="text-white">[message, setMessage]</span> = <span className="text-green-400">`Hello, intrepid traveler! 👋`</span>;
-{`\n\n`}
-<span className="text-white">Across the cosmos, a message for you:</span>
-{`\n\n`}
-<span className="text-green-400">""</span>
-{`\n\n`}
-<span className="text-white">Wishing you stardust dreams,</span>
-{`\n`}
-<span className="text-white">`</span>
+            {`// `}
+            <span className="text-pink-400">// 🌈 Spreading Stardust:</span>
+            {`\n`}
+            <span className="text-pink-400">// Crafting Cosmic Email 🌌</span>
+            {`\n\n`}
+            <span className="text-green-400">import</span>{" "}
+            <span className="text-white">{`{ useState }`}</span>{" "}
+            <span className="text-green-400">from</span>{" "}
+            <span className="text-yellow-300">"react"</span>;
+            {`\n\n`}
+            <span className="text-blue-400">const</span>{" "}
+            <span className="text-white">[sender, setSender]</span> ={" "}
+            <span className="text-yellow-300">"🚀"</span>;
+            {`\n`}
+            <span className="text-blue-400">const</span>{" "}
+            <span className="text-white">[recipient, setRecipient]</span> ={" "}
+            <span className="text-yellow-300">"📧"</span>;
+            {`\n`}
+            <span className="text-blue-400">const</span>{" "}
+            <span className="text-white">[subject, setSubject]</span> ={" "}
+            <span className="text-yellow-300">
+              "<span className="blink">|</span>✨"
+            </span>;
+            {`\n`}
+            <span className="text-blue-400">const</span>{" "}
+            <span className="text-white">[message, setMessage]</span> ={" "}
+            <span className="text-green-400">{`Hello, intrepid traveler! 👋`}</span>;
+            {`\n\n`}
+            <span className="text-white">Across the cosmos, a message for you:</span>
+            {`\n\n`}
+            <span className="text-green-400">""</span>
+            {`\n\n`}
+            <span className="text-white">Wishing you stardust dreams,</span>
+            {`\n`}
+            <span className="text-white">`</span>
           </pre>
         </div>
 
@@ -97,9 +164,7 @@ export default function ContactPage() {
               key={field}
               type={field === "email" ? "email" : "text"}
               name={field}
-              placeholder={`Your ${
-                field.charAt(0).toUpperCase() + field.slice(1)
-              }`}
+              placeholder={`Your ${field.charAt(0).toUpperCase() + field.slice(1)}`}
               value={formData[field]}
               onChange={handleChange}
               required
@@ -137,8 +202,7 @@ export default function ContactPage() {
           </div>
 
           <p className="text-center text-lg text-white">
-            By submitting this, you acknowledge that you have read the Privacy
-            Policy.
+            By submitting this, you acknowledge that you have read the Privacy Policy.
           </p>
 
           <div className="flex justify-center mb-4">
@@ -161,3 +225,4 @@ export default function ContactPage() {
     </section>
   );
 }
+

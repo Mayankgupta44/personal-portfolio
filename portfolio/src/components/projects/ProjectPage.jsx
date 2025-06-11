@@ -32,7 +32,7 @@ const projects = [
     title: "Personal Portfolio",
     description:
       "Built with React and styled with Tailwind CSS, this portfolio is a showcase of my front-end development skills. It is deployed on Render for optimal performance. The site highlights my proficiency in creating responsive and visually appealing user interfaces.",
-    tech: ["React.js", "Tailwind CSS", "Render", "Node.js"],
+    tech: ["React.js", "Tailwind CSS", "Vercel", "Node.js"],
     image: "./assets/portfolio.png",
     liveDemo: "#",
     githubRepo: "#",
@@ -47,6 +47,7 @@ const techIcons = {
   "Express.js": "./assets/express-svgrepo-com.svg",
   MongoDB: "./assets/mongodb-icon.svg",
   Render: "/assets/render.svg",
+  "Vercel":"/assets/vercel-icon-svgrepo-com.svg",
   "Chart.js": "/assets/chartjs.png",
   Jest: "/assets/jest.png",
   Cloudinary: "/assets/cloudinary-svgrepo-com.svg",

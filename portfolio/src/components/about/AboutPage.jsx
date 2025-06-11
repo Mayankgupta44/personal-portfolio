@@ -71,7 +71,7 @@ function AboutPage() {
         className="absolute right-4 top-0 h-full flex flex-col items-center justify-start"
         style={{ color: "#4bbcdc" }}
       >
-        <div className="flex flex-col items-center mt-2">
+        <a href="email" className="flex flex-col items-center mt-2">
           {email.split("").map((char, index) => (
             <span
               key={index}
@@ -85,7 +85,7 @@ function AboutPage() {
               {char}
             </span>
           ))}
-        </div>
+        </a>
         <div className="border-r-2 border-blue-500 h-full mt-2"></div>
       </div>
 
