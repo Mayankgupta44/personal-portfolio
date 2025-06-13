@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 const projects = [
   {
@@ -34,8 +34,8 @@ const projects = [
       "Built with React and styled with Tailwind CSS, this portfolio is a showcase of my front-end development skills. It is deployed on Render for optimal performance. The site highlights my proficiency in creating responsive and visually appealing user interfaces.",
     tech: ["React.js", "Tailwind CSS", "Vercel", "Node.js"],
     image: "./assets/portfolio.png",
-    liveDemo: "#",
-    githubRepo: "#",
+    liveDemo: "",
+    githubRepo: "https://github.com/Mayankgupta44/personal-portfolio",
   },
 ];
 
@@ -218,9 +218,9 @@ const ProjectPage = () => {
     setStartIndex((prev) => (prev + 1) % projects.length);
   };
 
-  const prevProject = () => {
-    setStartIndex((prev) => (prev - 1 + projects.length) % projects.length);
-  };
+  // const prevProject = () => {
+  //   setStartIndex((prev) => (prev - 1 + projects.length) % projects.length);
+  // };
 
   const handleCardTap = (posIndex) => {
     if (posIndex === 0) {
