@@ -7,9 +7,11 @@ import { ThemeProvider } from "./components/contexts/ThemeContext";
 import { ToastProvider } from "./components/contexts/ToastContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <ThemeProvider>
-    <ToastProvider>
-      <App />
-    </ToastProvider>
-  </ThemeProvider>
+  <React.StrictMode>
+    <ThemeProvider>
+      <ToastProvider>
+        <App />
+      </ToastProvider>
+    </ThemeProvider>
+  </React.StrictMode>
 );
